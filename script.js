@@ -22,7 +22,6 @@ function computerPlay(){
 }
 
 function playRound(playerSelection, computerSelection){
-    // Code Here
     if (computerSelection == playerSelection){
         userTieCount +=1;
         return "It's a Tie!!";
@@ -56,7 +55,6 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-//Still need to fix the undefined result, add the winning count
 function game(){
     alert("Time to Play Rock-Paper-Scissors!!\nThis is going to be a Five Round Match againts a Computer\nAre you Ready??")
     
@@ -80,18 +78,36 @@ function game(){
         }
         while(true);
 
-        // console.log(`You chose ${userGameInput}`);
-
         let computerSelection = computerPlay();
-        // console.log(`The Computer chose ${computerSelection}`);
-
         let roundResult = playRound(userGameInput,computerSelection);
-        // console.log(roundResult);
 
         alert(`You Choose ${userGameInput}\nThe Computer Choose ${computerSelection}\nThe Result:\n${roundResult}`)
     }
 
     alert(`Game Over!\nHere are your Results:\nWin: ${userWinCount}x\nLose: ${userLoseCount}x\nTie: ${userTieCount}x`);
+    
+    let askingToPlayAgain = prompt("Do you want to Play Again? (Answer: yes/no)");
+    // Asking the User to Play Again or not
+    do { 
+        if(typeof askingToPlayAgain === "string"){
+            askingToPlayAgain = askingToPlayAgain.toLowerCase();
+            if(askingToPlayAgain == "yes"){
+                userLoseCount = 0;
+                userTieCount = 0;
+                userWinCount = 0;
+                return game();
+            }
+            else if(askingToPlayAgain == "no"){
+                break;
+            }
+            else{
+                askingToPlayAgain = prompt("Please write either yes/no");
+            }
+        }
+        else{
+            askingToPlayAgain = prompt("Please write either yes/no");
+        }
+    } while (true);
 }
 
 game();
