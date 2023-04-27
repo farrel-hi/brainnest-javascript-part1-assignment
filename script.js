@@ -1,4 +1,9 @@
-let errorMessage = "Something seems to be wrong.... Let me fix it first.";
+let errorMessage = "Something seems to be wrong.... Let me fix it first."
+, userWinCount = 0
+, userTieCount = 0
+, userLoseCount = 0
+;
+
 
 function computerPlay(){
     let computerNumberChoice = Math.floor(Math.random()*3); //Randomize a number form 0 to 2
@@ -12,45 +17,51 @@ function computerPlay(){
         case 2:
             return computerStringChoice = "scissors";
         default:
-            return console.log(errorMessage);
+            return alert(errorMessage);
     } 
 }
 
 function playRound(playerSelection, computerSelection){
     // Code Here
     if (computerSelection == playerSelection){
-        return console.log("It's a Tie!!");
+        userTieCount +=1;
+        return "It's a Tie!!";
     }
     else if (playerSelection == "rock" && computerSelection == "paper"){
-        return console.log("You Lose! Paper beats Rock");
+        userLoseCount +=1;
+        return "You Lose! Paper beats Rock";
     }
     else if (playerSelection == "rock" && computerSelection == "scissors"){
-        return console.log("You Win! Rock beats Scissors");
+        userWinCount +=1;
+        return "You Win! Rock beats Scissors";
     }
     else if (playerSelection == "paper" && computerSelection == "scissors"){
-        return console.log("You Lose! Paper beats Scissors");
+        userLoseCount +=1;
+        return "You Lose! Paper beats Scissors";
     }
     else if (playerSelection == "paper" && computerSelection == "rock"){
-        return console.log("You Win! Paper beats Rock");
+        userWinCount +=1;
+        return "You Win! Paper beats Rock";
     }
     else if (playerSelection == "scissors" && computerSelection == "paper"){
-        return console.log("You Win! Scissors beats Paper");
+        userWinCount +=1;
+        return "You Win! Scissors beats Paper";
     }
     else if (playerSelection == "scissors" && computerSelection == "rock"){
-        return console.log("You Lose! Rock beats Scissors");
+        userLoseCount +=1;
+        return "You Lose! Rock beats Scissors";
     }
     else{
-        return console.log(errorMessage);
+        return alert(errorMessage);
     }
 }
 
 //Still need to fix the undefined result, add the winning count
 function game(){
-    // let userWinningCount = 0;
     alert("Time to Play Rock-Paper-Scissors!!\nThis is going to be a Five Round Match againts a Computer\nAre you Ready??")
     
     for (let i=0;i<5;i++){
-        console.log(`Round ${i+1}!`);
+        alert(`Round ${i+1}!\n[Win: ${userWinCount}, Lose: ${userLoseCount}, Tie: ${userTieCount}]`);
         let userGameInput = prompt("Choose your hand (Rock/Paper/Scissors):");
 
         do{
@@ -69,14 +80,18 @@ function game(){
         }
         while(true);
 
-        console.log(`You chose ${userGameInput}`);
+        // console.log(`You chose ${userGameInput}`);
 
         let computerSelection = computerPlay();
-        console.log(`The Computer chose ${computerSelection}`);
+        // console.log(`The Computer chose ${computerSelection}`);
 
         let roundResult = playRound(userGameInput,computerSelection);
-        console.log(roundResult);
+        // console.log(roundResult);
+
+        alert(`You Choose ${userGameInput}\nThe Computer Choose ${computerSelection}\nThe Result:\n${roundResult}`)
     }
+
+    alert(`Game Over!\nHere are your Results:\nWin: ${userWinCount}x\nLose: ${userLoseCount}x\nTie: ${userTieCount}x`);
 }
 
 game();
