@@ -18,27 +18,25 @@ function computerPlay(){
 
 function playRound(playerSelection, computerSelection){
     // Code Here
-    lowerTextPlayerSelection = playerSelection.toLowerCase();
-
-    if (computerSelection == lowerTextPlayerSelection){
+    if (computerSelection == playerSelection){
         return console.log("It's a Tie!!");
     }
-    else if (lowerTextPlayerSelection == "rock" && computerSelection == "paper"){
+    else if (playerSelection == "rock" && computerSelection == "paper"){
         return console.log("You Lose! Paper beats Rock");
     }
-    else if (lowerTextPlayerSelection == "rock" && computerSelection == "scissors"){
+    else if (playerSelection == "rock" && computerSelection == "scissors"){
         return console.log("You Win! Rock beats Scissors");
     }
-    else if (lowerTextPlayerSelection == "paper" && computerSelection == "scissors"){
+    else if (playerSelection == "paper" && computerSelection == "scissors"){
         return console.log("You Lose! Paper beats Scissors");
     }
-    else if (lowerTextPlayerSelection == "paper" && computerSelection == "rock"){
+    else if (playerSelection == "paper" && computerSelection == "rock"){
         return console.log("You Win! Paper beats Rock");
     }
-    else if (lowerTextPlayerSelection == "scissors" && computerSelection == "paper"){
+    else if (playerSelection == "scissors" && computerSelection == "paper"){
         return console.log("You Win! Scissors beats Paper");
     }
-    else if (lowerTextPlayerSelection == "scissors" && computerSelection == "rock"){
+    else if (playerSelection == "scissors" && computerSelection == "rock"){
         return console.log("You Lose! Rock beats Scissors");
     }
     else{
@@ -46,10 +44,39 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-// Check each function
-// console.log(computerPlay()); //Check computerPlay output
-// playRound("RoCk", computerPlay()); //Check playRound output
-
+//Still need to fix the undefined result, add the winning count
 function game(){
-    // Code Here
+    // let userWinningCount = 0;
+    alert("Time to Play Rock-Paper-Scissors!!\nThis is going to be a Five Round Match againts a Computer\nAre you Ready??")
+    
+    for (let i=0;i<5;i++){
+        console.log(`Round ${i+1}!`);
+        let userGameInput = prompt("Choose your hand (Rock/Paper/Scissors):");
+
+        do{
+            if (typeof userGameInput === "string"){
+                userGameInput = userGameInput.toLowerCase();
+                if(userGameInput == "rock" || userGameInput == "paper" || userGameInput == "scissors"){
+                    break;
+                }
+                else{
+                    userGameInput = prompt("Please write either Rock/Paper/Scissors");
+                }
+            }
+            else{
+                userGameInput = prompt("Please write either Rock/Paper/Scissors");
+            }
+        }
+        while(true);
+
+        console.log(`You chose ${userGameInput}`);
+
+        let computerSelection = computerPlay();
+        console.log(`The Computer chose ${computerSelection}`);
+
+        let roundResult = playRound(userGameInput,computerSelection);
+        console.log(roundResult);
+    }
 }
+
+game();
