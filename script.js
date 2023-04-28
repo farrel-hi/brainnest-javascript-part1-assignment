@@ -56,6 +56,7 @@ function playRound(playerSelection, computerSelection){
 }
 
 function game(){    
+    alert("Time to Play Rock-Paper-Scissors!!\nThis is going to be a Five Round Match againts a Computer\nAre you Ready??");
     for (let i=0;i<5;i++){
         alert(`Round ${i+1}!\n[Win: ${userWinCount}, Lose: ${userLoseCount}, Tie: ${userTieCount}]`);
         let userGameInput = prompt("Choose your hand (Rock/Paper/Scissors):");
@@ -108,5 +109,4 @@ function game(){
     } while (true);
 }
 
-alert("Time to Play Rock-Paper-Scissors!!\nThis is going to be a Five Round Match againts a Computer\nAre you Ready??");
 game();
