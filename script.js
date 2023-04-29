@@ -77,8 +77,8 @@ function game(){
         }
         while(true);
 
-        let computerSelection = computerPlay();
-        let roundResult = playRound(userGameInput,computerSelection);
+        const computerSelection = computerPlay();
+        const roundResult = playRound(userGameInput,computerSelection);
 
         alert(`You Choose ${userGameInput}\nThe Computer Choose ${computerSelection}\nThe Result:\n${roundResult}`);
     }
