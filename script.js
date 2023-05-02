@@ -2,24 +2,8 @@ let errorMessage = "Something seems to be wrong.... Let me fix it first."
 , userWinCount = 0
 , userTieCount = 0
 , userLoseCount = 0
+, userForfeitCount = 0
 ;
-
-
-function computerPlay(){
-    let computerNumberChoice = Math.floor(Math.random()*3); //Randomize a number form 0 to 2
-    let computerStringChoice = "";
-
-    switch(computerNumberChoice){ //Convert the number to string
-        case 0:
-            return computerStringChoice = "rock";
-        case 1:
-            return computerStringChoice = "paper";
-        case 2:
-            return computerStringChoice = "scissors";
-        default:
-            return alert(errorMessage);
-    } 
-}
 
 function processingTheRoundWinner(playerSelection, computerSelection){
     if (computerSelection == playerSelection){
@@ -50,74 +34,95 @@ function processingTheRoundWinner(playerSelection, computerSelection){
         userLoseCount +=1;
         return "You Lose! Rock beats Scissors";
     }
+    else if(playerSelection == "NONE"){
+        return "You Forfeit This Round";
+    }
     else{
         return alert(errorMessage);
     }
 }
 
-function playFiveRound(){
-    for (let i=0;i<5;i++){
-        alert(`Round ${i+1}!\n[Win: ${userWinCount}, Lose: ${userLoseCount}, Tie: ${userTieCount}]`);
-        let userGameInput = prompt("Choose your hand (Rock/Paper/Scissors):");
-        do{
-            if (typeof userGameInput === "string"){
-                userGameInput = userGameInput.toLowerCase().trim();
-                if(userGameInput == "rock" || userGameInput == "paper" || userGameInput == "scissors"){
-                    break;
-                }
-                else{
-                    userGameInput = prompt("Please write either Rock/Paper/Scissors");
-                }
-            }
-            else if(typeof userGameInput ==="object"){
-                throw new Error("You're Ending the Game");
-            }
-            else{
-                userGameInput = prompt("Please write either Rock/Paper/Scissors");
-            }
-        }
-        while(true);
+function computerPlay(){
+    let computerNumberChoice = Math.floor(Math.random()*3); //Randomize a number form 0 to 2
 
-        const computerSelection = computerPlay();
-        const roundResult = processingTheRoundWinner(userGameInput,computerSelection);
-
-        alert(`You Choose ${userGameInput}\nThe Computer Choose ${computerSelection}\nThe Result:\n${roundResult}`);
-    }
+    switch(computerNumberChoice){ //Convert the number to string
+        case 0:
+            return "rock";
+        case 1:
+            return "paper";
+        case 2:
+            return "scissors";
+        default:
+            return alert(errorMessage);
+    } 
 }
 
 function askUserForReplay(){
-    let askingToPlayAgain = prompt("Do you want to Play Again? (Answer: yes/no)");
-    do { 
-        if(typeof askingToPlayAgain === "string"){
-            askingToPlayAgain = askingToPlayAgain.toLowerCase().trim();
-            if(askingToPlayAgain == "yes"){
-                userLoseCount = 0;
-                userTieCount = 0;
-                userWinCount = 0;
-                return game();
-            }
-            else if(askingToPlayAgain == "no"){
-                break;
+    let askingToPlayAgain = confirm("Do you want to Play Again?");
+    if(askingToPlayAgain){
+        userLoseCount = 0;
+        userTieCount = 0;
+        userWinCount = 0;
+        userForfeitCount = 0;
+        return game();
+    }
+    else{
+        return alert("The Game has Ended\nThank you for Playing!")
+    }
+}
+
+function checkUserHandInput(userInput) {
+    do{
+        console.log(userInput);
+        console.log(typeof userInput);
+        if (typeof userInput === "string"){
+            console.log("Koko");
+            userInput = userInput.toLowerCase().trim();
+            if(userInput == "rock" || userInput == "paper" || userInput == "scissors"){
+                return userInput;
             }
             else{
-                askingToPlayAgain = prompt("Please write either yes/no");
+                userInput = prompt("Please write either Rock/Paper/Scissors");
             }
         }
-        else if(typeof askingToPlayAgain ==="object"){
-            throw new Error("You're Ending the Game");
+        else if(typeof userInput ==="object"){ 
+            console.log(typeof userInput);
+            console.log(userInput);
+            let askCancelVerification = confirm("You have pressed the Cancel Button, it means you forfeit the Round. Are you Sure?");
+            if (askCancelVerification){
+                userForfeitCount+=1;
+                return "NONE";
+            }
+            else{
+                userInput = "check"; //"check" is used in order to trigger "Please write either Rock/Paper/Scissors"
+                continue;
+            }
         }
         else{
-            askingToPlayAgain = prompt("Please write either yes/no");
+            userGameInput = prompt("Please write either Rock/Paper/Scissors");
         }
-    } while (true);
+    }
+    while(true);
+}
+
+function getUserHandInput() {
+    let userGameInput = prompt("Choose your hand (Rock/Paper/Scissors):");
+    return checkUserHandInput(userGameInput);
 }
 
 function game(){    
     alert("Time to Play Rock-Paper-Scissors!!\nThis is going to be a Five Round Match againts a Computer\nAre you Ready??");
     
-    playFiveRound();
+    for (let i=0;i<5;i++){
+        alert(`Round ${i+1}!\n[Win: ${userWinCount}, Lose: ${userLoseCount}, Tie: ${userTieCount}, Forfeit: ${userForfeitCount}]`);
 
-    alert(`Game Over!\nHere are your Results:\nWin: ${userWinCount}x\nLose: ${userLoseCount}x\nTie: ${userTieCount}x`);
+        const userInput = getUserHandInput();
+        const computerSelection = computerPlay();
+        const roundResult = processingTheRoundWinner(userInput,computerSelection);
+
+        alert(`You Choose ${userInput}\nThe Computer Choose ${computerSelection}\nThe Result:\n${roundResult}`);
+    }
+    alert(`Game Over!\nHere are your Results:\nWin: ${userWinCount}x\nLose: ${userLoseCount}x\nTie: ${userTieCount}x\nForfeit: ${userForfeitCount}`);
     
     askUserForReplay();
 }
